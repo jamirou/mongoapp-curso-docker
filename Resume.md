@@ -23,7 +23,7 @@ Al descargar imágenes de aplicaciones como mysql, se pueden crear uno o varios 
   - `docker create ”image”`: Crea un contenedor sobre la imagen indicada (es decir podemos crear un contenedor en base a la imagen de mysql con el comando ` docker create mysql`) .
   - `docker create —name “container_name” ”image”` : Crea un contenedor sobre la imagen indicada pero con el nombre especificado en el parámetro “container_name".
   - `docker create -p “local-port:container-port”`: Crea un contenedor indicando que el mismo puede recibir solicitudes desde el puerto de nuestra maquina. En caso de no especificar el puerto al cual queremos dar acceso por ejemplo “-p 27017”, esto le indicara a docker que debe crear un contenedor el cual corre en el puerto 27017, eligiendo de manera aleatoria un puerto de nuestro PC desde el cual se podrá acceder al contenedor.
-  - `docker create -p 27017:27017 —name monguito -e MONGO_INITDB_ROOT_USERNAME=nico -e MONGO_INITDB_ROOT_PASSWORD=password mongo`: Este comando indica crear un contenedor que permita el mapeo de puertos permitiendo acceder al puerto de mongodb (27017) desde la direccion IP (0.0.0.0:27017 o localhost:27017), el contenedor se llamará “monguito”, le indicará a la imagen de mongo mediante las variables de entorno de USERNAME y ROOT_PASSWORD el nombre usuario y las contraseña para acceder a la base de datos de mongo. Todo esto en la imagen de Mongo
+  - `docker create -p 27017:27017 —name monguito -e MONGO_INITDB_ROOT_USERNAME=jamiro -e MONGO_INITDB_ROOT_PASSWORD=password mongo`: Este comando indica crear un contenedor que permita el mapeo de puertos permitiendo acceder al puerto de mongodb (27017) desde la direccion IP (0.0.0.0:27017 o localhost:27017), el contenedor se llamará “monguito”, le indicará a la imagen de mongo mediante las variables de entorno de USERNAME y ROOT_PASSWORD el nombre usuario y las contraseña para acceder a la base de datos de mongo. Todo esto en la imagen de Mongo
   - `docker start ”container"`: Inicia el contenedor indicado (se puede especificar el id del contenedor o el nombre).
   - `docker stop ”container”`: Detiene la ejecución del contenedor especificado (se puede especificar el id del contenedor o el nombre).
   - `docker ps`: Muestra una lista de todos los container que están en ejecución.
@@ -85,8 +85,8 @@ CMD ["node", "/home/app/index.js"]
 
 ```jsx
 {
-  Antes: "mongodb://nico:password@localhost:27017/miapp?authSource=admin";
-  Despues: "mongodb://nico:password@monguitoÏ:27017/miapp?authSource=admin";
+  Antes: "mongodb://jamiro:password@localhost:27017/miapp?authSource=admin";
+  Despues: "mongodb://jamiro:password@monguitoÏ:27017/miapp?authSource=admin";
 }
 // Ya que el servidor de express no esta corriendo en el host
 // de la PC afitrion, sino en el host de la red de contenedores creada.
@@ -122,7 +122,7 @@ version: "3.9" <-- Version del grupo de contenedores.
     monguito:
       image: mongo <-- Imagen a utilizar para este contenedor.
       environment: <-- Listado de variables de entorno.
-        - MONGO_INITDB_ROOT_USERNAME=nico
+        - MONGO_INITDB_ROOT_USERNAME=jamiro
         - MONGO_INITDB_ROOT_PASSWORD=password
       ports:
         - "27017:27017"
@@ -151,7 +151,7 @@ Los volúmenes son el mecanismo preferido para persistir la data generada por un
 monguito:
     image: mongo
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=nico
+      - MONGO_INITDB_ROOT_USERNAME=jamiro
       - MONGO_INITDB_ROOT_PASSWORD=password
     volumes: <-- listado de volúmenes a utilizar en este contenedor.
       - mongo-data:/data/db <-- A la izquierda la carpeta en nuestra PC afitrión en la cual sera guardada la información de nuestro contenedor.
